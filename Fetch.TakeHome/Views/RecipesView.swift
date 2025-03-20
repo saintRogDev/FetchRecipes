@@ -22,6 +22,9 @@ struct RecipesView<ViewModel>: View where ViewModel: RecipesViewModelProtocol  {
                         simpleErrorView(message: "Oh no, there are no recipes to show")
                     } else {
                         recipesListView(list: recipes)
+                            .refreshable {
+                                await viewModel.fetchRecipes()
+                            }
                     }
                 case .error(_):
                     simpleErrorView(message: "Opps, there was a problem getting the recipes")
